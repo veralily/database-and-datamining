@@ -1,0 +1,576 @@
+setwd("D://MyProgram//R//dataset")
+data_read <- read.csv("card.csv",header=TRUE,stringsAsFactors=FALSE)
+#col <- c(1:3)
+print(dim(data_read))
+#typeof(a)
+new_data1 <- unique(data_read)
+print(dim(new_data1))
+new_data2 <- new_data1[complete.cases(new_data1[,1:2]),]
+print(dim(new_data2))
+for(i in 1:dim(new_data2)[1])
+{
+	data <- new_data2[i,3]
+	if(data == "classic" | data == "junior" | data == "gold")
+	{
+
+	}
+	else
+		new_data2[-i,]
+
+	data <- as.character(new_data2[i,"card_id"])
+	#print(typeof(data))
+	if(is.na(as.numeric(data))){
+		print(i)
+		j <- 0
+		while(1){
+			j <- j+1
+			char <- substr(data,j,j+1)
+			if(is.na(as.numeric(char))){
+				break
+			}
+		}
+		result <- substr(data,1,j)
+		new_data2[i,"card_id"] <- as.integer(result)
+		print(result)
+	}
+
+	data <- as.character(new_data2[i,"disp_id"])
+	#print(typeof(data))
+	if(is.na(as.numeric(data))){
+		print(i)
+		j <- 0
+		while(1){
+			j <- j+1
+			char <- substr(data,j,j+1)
+			if(is.na(as.numeric(char))){
+				break
+			}
+		}
+		result <- substr(data,1,j)
+		new_data2[i,"disp_id"] <- as.integer(result)
+		print(result)
+	}
+	#break	
+}
+print(dim(new_data2))
+write.csv(new_data2,"card_2.csv",row.names = FALSE)
+#################################################
+
+setwd("D://MyProgram//R//dataset")
+data_read <- read.csv("client.csv",header=TRUE,stringsAsFactors=FALSE)
+#col <- c(1:3)
+print(dim(data_read))
+#typeof(a)
+new_data1 <- unique(data_read)
+print(dim(new_data1))
+new_data2 <- new_data1[complete.cases(new_data1),]
+print(dim(new_data2))
+new_data2$gender <- 0
+new_data2$constellation <- NA
+names(new_data2)[2] <- "age"
+print(dim(new_data2))
+for(i in 1:1:dim(new_data2)[1])
+{
+	data <- new_data2[i,"age"]
+	day <- as.numeric(substr(data,5,6))
+	month <- as.numeric(substr(data,3,4))
+	year <- as.numeric(substr(data,1,2))
+	age <- 100 - as.numeric(year)
+
+	new_data2[i,"age"] <- age
+	if(is.na(month))
+	{
+		
+		new_data2[i,"gender"] <- NA
+	}
+	else
+	{
+		if(as.numeric(month) < 50)
+		{
+			new_data2[i,"gender"] <- "male"
+		}
+		else{
+			month <- as.numeric(month) - 50
+			new_data2[i,"gender"] <- "female"
+		}
+	}
+			
+	date <- as.numeric(month)*100 + as.numeric(day)
+	if(is.na(date))
+	{
+		new_data2[i,"constellation"] <- NA
+	}
+	else{
+		if(date < 119 | date > 1220)
+		{
+			new_data2[i,"constellation"] <- "Capricom"
+		}
+		if(date > 118 & date < 219)
+		{
+			new_data2[i,"constellation"] <- "Aquarius"
+		}
+		if(date > 218 & date < 321)
+		{
+			new_data2[i,"constellation"] <- "Pisces"
+		}
+		if(date > 320 & date < 421)
+		{
+			new_data2[i,"constellation"] <- "Aries"
+		}
+		if(date > 420 & date < 521)
+		{
+			new_data2[i,"constellation"] <- "Taurus"
+		}
+		if(date > 520 & date < 622)
+		{
+			new_data2[i,"constellation"] <- "Gemini"
+		}
+		if(date > 621 & date < 723)
+		{
+			new_data2[i,"constellation"] <- "Cancer"
+		}
+		if(date > 722 & date < 823)
+		{
+			new_data2[i,"constellation"] <- "Leo"
+		}
+		if(date > 822 & date < 923)
+		{
+			new_data2[i,"constellation"] <- "Virgo"
+		}
+		if(date > 922 & date < 1023)
+		{
+			new_data2[i,"constellation"] <- "Libra"
+		}
+		if(date > 1022 & date < 1122)
+		{
+			new_data2[i,"constellation"] <- "Scorpio"
+		}
+		if(date > 1121 & date < 1223)
+		{
+			new_data2[i,"constellation"] <- "Sagittarius"
+		}
+
+	}
+
+	data <- as.character(new_data2[i,"client_id"])
+	#print(typeof(data))
+	if(is.na(as.numeric(data))){
+		print(i)
+		j <- 0
+		while(1){
+			j <- j+1
+			char <- substr(data,j,j+1)
+			if(is.na(as.numeric(char))){
+				break
+			}
+		}
+		result <- substr(data,1,j)
+		new_data2[i,"client_id"] <- as.integer(result)
+		print(result)
+	}
+
+	data <- as.character(new_data2[i,"district_id"])
+	#print(typeof(data))
+	if(is.na(as.numeric(data))){
+		print(i)
+		j <- 0
+		while(1){
+			j <- j+1
+			char <- substr(data,j,j+1)
+			if(is.na(as.numeric(char))){
+				break
+			}
+		}
+		result <- substr(data,1,j)
+		new_data2[i,"district_id"] <- as.integer(result)
+		print(result)
+	}	
+}
+new_data2 <- new_data2[complete.cases(new_data2),]
+print(dim(new_data2))
+print(new_data2[4240:4250,])
+write.csv(new_data2[,1:5],"client_3.csv",row.names = FALSE)
+
+
+#############################################################
+setwd("D://MyProgram//R//dataset")
+data_read <- read.csv("account.csv",header=TRUE)
+#col <- c(1:3)
+print(dim(data_read))
+#typeof(a)
+new_data1 <- unique(data_read)
+print(dim(new_data1))
+new_data2 <- new_data1[complete.cases(new_data1),]
+print(dim(new_data2))
+for(i in 1:1:dim(new_data2)[1])
+{
+	data <- new_data2[i,"account_id"]
+	#print(typeof(data))
+	if(is.na(as.numeric(data))){
+		print(i)
+		j <- 0
+		while(1){
+			j <- j+1
+			char <- substr(data,j,j+1)
+			if(is.na(as.numeric(char))){
+				break
+			}
+		}
+		result <- substr(data,1,j)
+		new_data2[i,"account_id"] <- as.character(result)
+		print(result)
+	}	
+	data <- new_data2[i,"frequency"]
+	if(data == "POPLATEK MESICNE" | data == "POPLATEK PO OBRATU" | data == "POPLATEK TYDNE")
+	{
+
+	}	
+	else{
+		new_data2[-i,]
+	}
+}
+print(dim(new_data2))
+print(new_data2[4240:4250,])
+write.csv(new_data2,"account_2.csv",row.names = FALSE)
+
+#############################################################
+setwd("D://MyProgram//R//dataset")
+data_read <- read.csv("disp.csv",header=TRUE,stringsAsFactors=FALSE)
+#col <- c(1:3)
+print(dim(data_read))
+#typeof(a)
+new_data1 <- unique(data_read)
+print(dim(new_data1))
+new_data2 <- new_data1[complete.cases(new_data1),]
+print(dim(new_data2))
+for(i in 1:1:dim(new_data2)[1])
+{
+	data <- new_data2[i,"disp_id"]
+	#print(typeof(data))
+	if(is.na(as.numeric(data))){
+		print(i)
+		j <- 0
+		while(1){
+			j <- j+1
+			char <- substr(data,j,j+1)
+			if(is.na(as.numeric(char))){
+				break
+			}
+		}
+		result <- substr(data,1,j)
+		new_data2[i,"disp_id"] <- result
+		print(result)
+	}
+	data <- new_data2[i,"client_id"]
+	#print(typeof(data))
+	if(is.na(as.numeric(data))){
+		print(i)
+		j <- 0
+		while(1){
+			j <- j+1
+			char <- substr(data,j,j+1)
+			if(is.na(as.numeric(char))){
+				break
+			}
+		}
+		result <- substr(data,1,j)
+		new_data2[i,"client_id"] <- result
+		print(result)
+	}
+	data <- new_data2[i,"account_id"]
+	#print(typeof(data))
+	if(is.na(as.numeric(data))){
+		print(i)
+		j <- 0
+		while(1){
+			j <- j+1
+			char <- substr(data,j,j+1)
+			if(is.na(as.numeric(char))){
+				break
+			}
+		}
+		result <- substr(data,1,j)
+		new_data2[i,"account_id"] <- result
+		print(result)
+	}	
+	data <- new_data2[i,"type"]
+	if(data == "OWNER" | data == "DISPONENT")
+	{
+
+	}	
+	else{
+		print(i)
+		new_data2[,type] <- NA
+	}
+}
+new_data2 <- new_data2[complete.cases(new_data2),]
+print(dim(new_data2))
+print(new_data2[1:10,])
+write.csv(new_data2,"disp_2.csv",row.names = FALSE)
+######################################################3333
+setwd("D://MyProgram//R//dataset")
+data_read <- read.csv("loan.csv",header=TRUE,stringsAsFactors=FALSE)
+#col <- c(1:3)
+print(dim(data_read))
+#typeof(a)
+new_data1 <- unique(data_read)
+print(dim(new_data1))
+new_data2 <- new_data1[complete.cases(new_data1),]
+print(dim(new_data2))
+for(i in 1:1:dim(new_data2)[1])
+{
+	data <- new_data2[i,"loan_id"]
+	#print(typeof(data))
+	if(is.na(as.numeric(data))){
+		print(i)
+		j <- 0
+		while(1){
+			j <- j+1
+			char <- substr(data,j,j+1)
+			if(is.na(as.numeric(char))){
+				break
+			}
+		}
+		result <- substr(data,1,j)
+		new_data2[i,"loan_id"] <- result
+		print(result)
+	}	
+	data <- new_data2[i,"account_id"]
+	#print(typeof(data))
+	if(is.na(as.numeric(data))){
+		print(i)
+		j <- 0
+		while(1){
+			j <- j+1
+			char <- substr(data,j,j+1)
+			if(is.na(as.numeric(char))){
+				break
+			}
+		}
+		result <- substr(data,1,j)
+		new_data2[i,"account_id"] <- result
+		print(result)
+	}
+	data <- new_data2[i,"amount"]
+	print(typeof(data))
+	if(as.numeric(data) != new_data2[i,"payments"]*new_data2[i,"duration"]){
+		print(i)
+		new_data2[-i,]
+	}
+	data <- new_data2[i,"duration"]
+	print(typeof(data))
+	if(data < new_data2[i,"payduration"]){
+		print(i)
+		new_data2[-i,]
+	}
+	data <- new_data2[i,"status"]
+	if(data == "A" | data == "B" | data == "C" | data == "D")
+	{
+
+	}	
+	else{
+		new_data2[-i,]
+	}
+	break
+}
+print(dim(new_data2))
+new_data2 <- new_data2[complete.cases(new_data2),]
+print(dim(new_data2))
+print(new_data2[1:10,])
+write.csv(new_data2,"loan_2.csv",row.names = FALSE)
+####################################################3333
+setwd("D://MyProgram//R//dataset")
+data_read <- read.csv("order.csv",header=TRUE,stringsAsFactors=FALSE)
+#col <- c(1:3)
+print(dim(data_read))
+#typeof(a)
+new_data1 <- unique(data_read)
+print(dim(new_data1))
+new_data2 <- new_data1[complete.cases(new_data1),]
+print(dim(new_data2))
+for(i in 1:1:dim(new_data2)[1])
+{
+	data <- new_data2[i,"order_id"]
+	#print(typeof(data))
+	if(is.na(as.numeric(data))){
+		print(i)
+		j <- 0
+		while(1){
+			j <- j+1
+			char <- substr(data,j,j+1)
+			if(is.na(as.numeric(char))){
+				break
+			}
+		}
+		result <- as.integer(substr(data,1,j))
+		new_data2[i,"order_id"] <- result
+		print(result)
+	}
+	data <- new_data2[i,"account_id"]
+	#print(typeof(data))
+	if(is.na(as.numeric(data))){
+		print(i)
+		j <- 0
+		while(1){
+			j <- j+1
+			char <- substr(data,j,j+1)
+			if(is.na(as.numeric(char))){
+				break
+			}
+		}
+		result <- substr(data,1,j)
+		new_data2[i,"account_id"] <- as.character(result)
+		print(result)
+	}
+	data <- new_data2[i,"account_to"]
+	#print(typeof(data))
+	if(is.na(as.numeric(data))){
+		print(i)
+		j <- 0
+		while(1){
+			j <- j+1
+			char <- substr(data,j,j+1)
+			if(is.na(as.numeric(char))){
+				break
+			}
+		}
+		result <- as.integer(substr(data,1,j))
+		new_data2[i,"account_to"] <- result
+		print(result)
+	}	
+	data <- new_data2[i,"amount"]
+	#print(typeof(data))
+	if(is.na(as.numeric(data))){
+		print(i)
+		j <- 0
+		while(1){
+			j <- j+1
+			char <- substr(data,j,j+1)
+			if(is.na(as.numeric(char))){
+				break
+			}
+		}
+		result <- as.integer(substr(data,1,j))
+		new_data2[i,"amount"] <- result
+		print(result)
+	}
+	data <- new_data2[i,"k_symbol"]
+	if(data == "SIPO" | data == "UVER" | data == "POJISTNE" | data == "LEASING")
+	{
+
+	}	
+	else{
+		new_data2[i,"k_symbol"] <- "OTHER"
+	}
+}
+print(dim(new_data2))
+new_data2 <- new_data2[complete.cases(new_data2),]
+print(dim(new_data2))
+print(new_data2[1:10,])
+write.csv(new_data2,"order_2.csv",row.names = FALSE)
+##########################################################
+setwd("D://MyProgram//R//dataset")
+data_read <- read.csv("trans.csv",header=TRUE,stringsAsFactors=FALSE)
+#col <- c(1:3)
+print(dim(data_read))
+#typeof(a)
+new_data1 <- unique(data_read)
+print(dim(new_data1))
+new_data2 <- new_data1[complete.cases(new_data1),]
+print(dim(new_data2))
+for(i in 1:1:dim(new_data2)[1])
+{
+	data <- new_data2[i,"trans_id"]
+	#print(typeof(data))
+	if(is.na(as.numeric(data))){
+		print(i)
+		j <- 0
+		while(1){
+			j <- j+1
+			char <- substr(data,j,j+1)
+			if(is.na(as.numeric(char))){
+				break
+			}
+		}
+		result <- as.integer(substr(data,1,j))
+		new_data2[i,"trans_id"] <- result
+		print(result)
+	}
+	data <- new_data2[i,"account_id"]
+	#print(typeof(data))
+	if(is.na(as.numeric(data))){
+		print(i)
+		j <- 0
+		while(1){
+			j <- j+1
+			char <- substr(data,j,j+1)
+			if(is.na(as.numeric(char))){
+				break
+			}
+		}
+		result <- as.integer(substr(data,1,j))
+		new_data2[i,"account_id"] <- result
+		print(result)
+	}
+	data <- new_data2[i,"amount"]
+	#print(typeof(data))
+	if(is.na(as.numeric(data))){
+		print(i)
+		j <- 0
+		while(1){
+			j <- j+1
+			char <- substr(data,j,j+1)
+			if(is.na(as.numeric(char))){
+				break
+			}
+		}
+		result <- as.integer(substr(data,1,j))
+		new_data2[i,"amount"] <- result
+		print(result)
+	}	
+	data <- new_data2[i,"balance"]
+	#print(typeof(data))
+	if(is.na(as.numeric(data))){
+		print(i)
+		j <- 0
+		while(1){
+			j <- j+1
+			char <- substr(data,j,j+1)
+			if(is.na(as.numeric(char))){
+				break
+			}
+		}
+		result <- as.integer(substr(data,1,j))
+		new_data2[i,"balance"] <- result
+		print(result)
+	}
+	data <- new_data2[i,"k_symbol"]
+	if(data == "SIPO" | data == "UVER" | data == "POJISTNE" | data == "LEASING")
+	{
+
+	}	
+	else{
+		new_data2[i,"k_symbol"] <- "OTHER"
+	}
+	data <- new_data2[i,"type"]
+	if(data == "PRIJEM" | data == "VYDAJ")
+	{
+
+	}	
+	else{
+		new_data2[i,"type"] <- NA
+	}
+	data <- new_data2[i,"operation"]
+	if(data == "VYBER KARTOU" | data == "PREVOD Z UCTU" | data == "PREVOD NA UCET" | data == "VYBER" | data == "VKLAD")
+	{
+
+	}	
+	else{
+		new_data2[i,"operation"] <- NA
+	}
+}
+print(dim(new_data2))
+new_data2 <- new_data2[complete.cases(new_data2),]
+print(dim(new_data2))
+print(new_data2[1:10,])
+write.csv(new_data2,"tran_2.csv",row.names = FALSE)
